@@ -1,0 +1,34 @@
+<% if edit %>
+    <% action = cat_url(@cat) %>
+<% else %>
+    <% action = cats_url %>
+<% end %>
+
+<form action="<%= action %>" method="POST">
+<% if edit %>
+<input type="hidden" name="_method" value="PATCH">
+<% end %>
+
+    <input type="radio" name="cat[sex]" value="M"<%= @cat.sex == "M" ? "checked" : "" if edit %> > Male <br>
+    <input type="radio" name="cat[sex]" value="F"<%= @cat.sex == "F" ? "checked" : "" if edit %> > Female<br>
+    
+    <input type="text" name="cat[name]" value="<%= @cat.name if edit %>"> Name<br>
+
+    <input type="date" name="cat[birth_date]" value="<%= @cat.birth_date if edit %>"> Birth Date <br>
+
+    <select name="cat[color]">
+        <% Cat::COLORS.each do |color| %>
+            <option <%= @cat.color == color ? "selected" : "" if edit %> ><%= color %></option>
+        <% end %>
+    </select>
+
+    <br>
+    <br>
+    Description
+    <br>
+    <textarea name="cat[description]"><%=@cat.description if edit %></textarea>
+
+    <br>
+    <br>
+    <input type="submit" value="Save this cat!">
+</form>
